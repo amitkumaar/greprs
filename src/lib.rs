@@ -4,25 +4,16 @@ use std::error::Error;
 use std::env;
 
 pub fn grep<'a> (search: &str, contents: &'a str) -> Vec<&'a str>{
-    let mut result = Vec::new();
-    for line in contents.lines() {
-        if line.contains(search) {
-            result.push(line);
-        }
-    }
-    result
+    contents.lines()
+        .filter(|line| line.contains(search))
+        .collect()
 }
 
 pub fn grep_case_insensitive<'a>(search: &str, contents: &'a str) -> Vec<&'a str>{
-    let mut result = Vec::new();
-    let search = search.to_lowercase();
-    for line in contents.lines() {
-        if line.to_lowercase().contains(&search){
-            result.push(line);
-        }
-    }
-
-    result
+    contents.lines()
+        //.map(|line| line.to_lowercase())
+        .filter(|line| line.to_lowercase().contains(&search))
+        .collect()
 }
 
 #[cfg(test)]
